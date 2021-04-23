@@ -58,11 +58,19 @@ function createProduct() {
   const newPrice = footerButton.children[1].querySelector("input").value
   price.innerHTML = `$${newPrice}`
   const subTotal = tr.querySelector('.subtotal span')
-  subTotal.innerHTML = updateSubtotal(tr)
+  
+  subTotal.innerHTML = Number(0);
+  // subtotal is 0
+  console.log(subTotal.innerHTML)
+  // subtotal is NaN ??
+  console.log(subTotal)
+ 
+ 
 
   body.appendChild(tr)
   
   removeAllButtons()
+  updateSubtotal(tr)
   calculateAll()
 
 }
@@ -71,7 +79,6 @@ function removeAllButtons() {
   const removeButton = document.querySelectorAll(".btn-remove")
   removeButton.forEach((button) => {
     button.addEventListener('click', (event) => {
-      console.log('hello')
       removeProduct(event)
     })
   })
@@ -82,8 +89,8 @@ window.addEventListener('load', () => {
   //... your code goes here
   const calculatePricesBtn = document.getElementById('calculate');
   const buttonCreate= document.getElementById("create")
-  calculatePricesBtn.addEventListener('click', calculateAll);
   buttonCreate.addEventListener('click', createProduct)
+  calculatePricesBtn.addEventListener('click', calculateAll);
   removeAllButtons()
 
 });
