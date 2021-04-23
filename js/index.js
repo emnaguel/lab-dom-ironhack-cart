@@ -10,6 +10,7 @@ function updateSubtotal(product) {
   let calculateSubTotal = price * quantity
   subTotal.innerHTML = calculateSubTotal
 
+
 }
 
 function calculateAll() {
@@ -42,46 +43,47 @@ function removeProduct(event) {
 
 
 function createProduct() {
-  // let tr = document.createElement("tr");
-  // tr.classList.add("product")
-  // let nameTd = document.createElement("td")
-  // let priceTd = document.createElement("td")
-  // let quantityTd = document.createElement("td")
-  // let inputNumber = document.createElement("input")
-  // inputNumber.setAttribute("type", "number")
-  // inputNumber.value = 0
-  // nameTd.classList.add('name')
-  // priceTd.classList.add('price')
-  // quantityTd.classList.add('quantity')
-  // nameTd.innerHTML = footerButton.children[0].querySelector("input").value
-  // priceTd.innerHTML = footerButton.children[1].querySelector("input").value
-  // quantityTd.appendChild(inputNumber)
-  // tr.appendChild(nameTd)
-  // tr.appendChild(priceTd)
-  // tr.appendChild(quantityTd)
-  // console.log(tr)
-  // body.appendChild(tr)
-  const clone =  body.children[1].cloneNode(true)
-  const name = clone.querySelector('.name span')
+  const tr = document.createElement('tr')
+  tr.classList.add('product')
+  tr.innerHTML = `<td class="name"><span></span></td>
+  <td class="price"><span></span></td>
+  <td class="quantity"><input type="number" value="0" min="0" placeholder="Quantity" />
+  </td> <td class="subtotal">$<span></span></td><td class="action">
+  <button class="btn btn-remove">Remove</button>
+  </td>`
+  const name = tr.querySelector('.name span')
   const newName = footerButton.children[0].querySelector("input").value
-  const price = clone.querySelector('.price span')
-  const newPrice = footerButton.children[1].querySelector("input").value
   name.innerHTML = newName
-  price.innerHTML = newPrice
-  body.appendChild(clone)
+  const price = tr.querySelector('.price span')
+  const newPrice = footerButton.children[1].querySelector("input").value
+  price.innerHTML = `$${newPrice}`
+  const subTotal = tr.querySelector('.subtotal span')
+  subTotal.innerHTML = updateSubtotal(tr)
+
+  body.appendChild(tr)
+  
+  removeAllButtons()
+  calculateAll()
+
+}
+
+function removeAllButtons() {
+  const removeButton = document.querySelectorAll(".btn-remove")
+  removeButton.forEach((button) => {
+    button.addEventListener('click', (event) => {
+      console.log('hello')
+      removeProduct(event)
+    })
+  })
+
 }
 
 window.addEventListener('load', () => {
   //... your code goes here
   const calculatePricesBtn = document.getElementById('calculate');
   const buttonCreate= document.getElementById("create")
-  const removeButton = document.querySelectorAll(".btn-remove")
   calculatePricesBtn.addEventListener('click', calculateAll);
   buttonCreate.addEventListener('click', createProduct)
-  removeButton.forEach((button) => {
-    button.addEventListener('click', (event) => {
-      removeProduct(event)
-    })
-  })
+  removeAllButtons()
 
 });
